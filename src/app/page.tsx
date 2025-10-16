@@ -40,12 +40,13 @@ export default async function Home({ searchParams }: { searchParams: { page?: st
 
   return (
     <main className="flex flex-col bg-blue-100 items-center min-h-[100vh]">
-      <section className="mt-4 w-10/12 flex flex-row justify-between">
+      <section className="mt-4 w-10/12 flex flex-row justify-between max-md:flex-col max-md:gap-2">
         <h1 className="text-black text-center text-4xl">Pokedex</h1>
         <Search />
       </section>
 
-      <section className="bg-gray-50 grid grid-cols-5 grid-rows-2 border-gray-950 rounded mt-4 min-w-[90vw] min-h-[80vh]">
+      <section className="bg-gray-50 grid grid-cols-5 grid-rows-2 border-gray-950 rounded mt-4 min-w-[90vw] min-h-[80vh] 
+      max-md:grid-cols-4 max-sm:grid-cols-1 max-sm:place-items-center">
 
 
 
