@@ -1,103 +1,63 @@
+import { Card } from "@/components/card";
+import { Pagination } from "@/components/pagination";
+import { Search } from "@/components/search";
+import { PokemonsProps } from "@/types/pokemons";
 import Image from "next/image";
 
-export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+async function getPokemons(page = 1, query?: string) {
+  const offset = (page - 1) * 10;
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+  try {
+    if (query) {
+      const res = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${1000}&offset=${offset}`);
+      if (!res.ok) {
+        throw new Error("Erro ao buscar pokémons");
+      }
+      const data = await res.json();
+      const filtered = data.results.filter((p: PokemonsProps) =>
+        p.name.toLowerCase().includes(query.toLowerCase())
+      )
+
+      return filtered
+    } else {
+      const res = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${10}&offset=${offset}`);
+      if (!res.ok) {
+        throw new Error("Erro ao buscar pokémons");
+      }
+      const data = await res.json();
+      return data.results;
+    }
+  } catch (error) {
+    console.error('Failed to fetch');
+    return [];
+  }
+}
+
+export default async function Home({ searchParams }: { searchParams: { page?: string, query?: string }, }) {
+  const query = searchParams.query
+  const currentPage = Number(searchParams.page) || 1;
+  const pokemons = await getPokemons(currentPage, query);
+
+  return (
+    <main className="flex flex-col bg-blue-100 items-center min-h-[100vh]">
+      <section className="mt-4 w-10/12 flex flex-row justify-between">
+        <h1 className="text-black text-center text-4xl">Pokedex</h1>
+        <Search />
+      </section>
+
+      <section className="bg-gray-50 grid grid-cols-5 grid-rows-2 border-gray-950 rounded mt-4 min-w-[90vw] min-h-[80vh]">
+
+
+
+        {pokemons.map((p: PokemonsProps) => {
+          const id = p.url!.split("/").filter(Boolean).pop();
+          const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
+
+          return <Card key={id} url={imageUrl} name={p.name} />;
+        })}
+      </section>
+
+      <Pagination />
+    </main>
   );
 }
