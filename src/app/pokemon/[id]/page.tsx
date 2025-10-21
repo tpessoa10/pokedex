@@ -6,8 +6,11 @@ import Image from "next/image"
 import { useParams } from "next/navigation"
 import { useEffect, useState } from "react"
 import { StatBar } from "../components"
+import { FiArrowLeft } from "react-icons/fi"
+import { useRouter } from "next/navigation"
 
 export default function DetalhePokemon() {
+    const router = useRouter()
     const [data, setData] = useState<Pokemon>()
     const params = useParams()
     const id = params.id as string
@@ -34,6 +37,11 @@ export default function DetalhePokemon() {
 
     return (
         <div className="w-full flex flex-col justify-center items-center">
+            <div className="w-10/12">
+                <button className="cursor-pointer " onClick={() => router.back()}>
+                    <FiArrowLeft size={28}/>
+                </button>
+            </div>
             <div className="flex flex-col  items-center w-10/12 h-10/12 ">
                 <div className="flex mb-4 justify-around items-center flex-row w-full h-[30%]">
                     <div className="w-[20%] h-[70%] relative">
