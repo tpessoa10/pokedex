@@ -43,12 +43,12 @@ export default function DetalhePokemon() {
                 </button>
             </div>
             <div className="flex flex-col  items-center w-10/12 h-10/12 ">
-                <div className="flex mb-4 justify-around items-center flex-row w-full h-[30%]">
+                <div className="flex mb-4 justify-around items-center flex-row w-full h-[30%] max-md:flex-col">
                     <div className="w-[20%] h-[70%] relative">
                         <Image alt="" priority quality={100} fill src={`https://projectpokemon.org/images/normal-sprite/${data?.name}.gif`} />
                     </div>
                     <div className="">
-                        <h1 className="text-6xl">{data?.name}</h1>
+                        <h1 className="text-6xl max-md:text-3xl max-md:text-center">{data?.name}</h1>
                         <div className="flex flex-row gap-2 mt-4">
                             {data && data!.types.map((t) => (
                                 <Chip key={t.slot} type={t.type.name} />
@@ -60,7 +60,7 @@ export default function DetalhePokemon() {
                     <h1 className="text-3xl ml-2 mt-2">Estatísticas</h1>
                     <div className="flex mt-2 flex-col items-center mb-4">
                         {data?.stats.map((stat) => (
-                            <div className="flex w-[95%] flex-row items-center justify-between">
+                            <div key={stat.stat.name} className="flex w-[95%] flex-row items-center justify-between">
                                 <p>{stat.stat.name}</p>
                                 <div className="flex flex-row gap-4 items-center justify-center w-[30%]">
                                     <p className="inline-block w-10 text-right">{stat.base_stat}</p>

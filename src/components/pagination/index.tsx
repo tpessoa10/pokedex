@@ -1,5 +1,6 @@
 "use client";
 import { useRouter, useSearchParams } from "next/navigation";
+import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 
 export function Pagination() {
   const router = useRouter();
@@ -13,13 +14,13 @@ export function Pagination() {
   }
 
   return (
-    <div className="flex flex-row justify-center items-center gap-4 mt-4">
+    <div className="flex flex-row justify-center items-center gap-4 mt-4 max-md:mb-2">
       <button
         onClick={() => handlePageChange(currentPage - 1)}
         disabled={currentPage === 1}
         className="bg-gray-300 px-4 py-2 rounded cursor-pointer disabled:opacity-50"
       >
-         Voltar
+         <FiArrowLeft/>
       </button>
 
       <span className="font-semibold">{currentPage}</span>
@@ -28,7 +29,7 @@ export function Pagination() {
         onClick={() => handlePageChange(currentPage + 1)}
         className="bg-gray-300 px-4 py-2 rounded cursor-pointer"
       >
-        Avançar 
+        <FiArrowRight/> 
       </button>
     </div>
   );
