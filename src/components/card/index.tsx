@@ -8,7 +8,7 @@ import { Chip } from "./components"
 export function Card({ name, url, id, types }: PokemonsProps) {
 
     return (
-        <Link className="bg-white rounded mx-2 my-2 h-[35vh] flex flex-col items-center w-[15vw] border-1 border-gray-300 max-sm:w-[80%]" href={`/pokemon/${id}`}>
+        <Link className="bg-white rounded mx-2 my-2 h-[40vh] flex flex-col items-center w-[18vw] border-1 border-gray-300 max-sm:w-[80%]" href={`/pokemon/${id}`}>
             <div className="w-full text-xl">
                 <h2 className="font-medium mt-3 ml-3">{name}</h2>
             </div>
