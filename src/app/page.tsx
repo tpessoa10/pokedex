@@ -54,7 +54,7 @@ export default async function Home({
         {/*<Search />*/}
       </section>
 
-      <section className="bg-gray-50 grid grid-cols-5 grid-rows-2 border-gray-950 rounded mt-4 min-w-[95vw] min-h-[80vh] 
+      <section className="bg-gray-50 grid grid-cols-5 grid-rows-2 max-lg:grid-cols-4 border-gray-950 rounded mt-4 min-w-[95vw] min-h-[80vh] 
       max-md:grid-cols-4 max-sm:grid-cols-1 max-sm:place-items-center">
 
         {pokemons.map((p) => (

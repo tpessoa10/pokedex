@@ -17,7 +17,7 @@ export function Card({ name, url, id, types }: PokemonsProps) {
                     <Image alt="" className="transition-transform duration-500 ease-in-out hover:scale-110" fill priority quality={100} src={url as string} />
                 </div>
             </div>
-            <div className="h-[40%] mt-2 flex flex-row gap-2 justify-center items-center">
+            <div className="h-[40%] mt-2 flex flex-row gap-2 justify-center items-center max-lg:flex-col">
                 {types?.map((type, index) => (
                     <Chip key={index} type={type}/>
                 ))}
