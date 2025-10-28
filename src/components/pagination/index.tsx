@@ -1,7 +1,7 @@
 "use client";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useTransition } from "react";
-import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
+import { FaAnglesRight, FaAnglesLeft, FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 
 export function Pagination() {
   const router = useRouter();
@@ -17,7 +17,7 @@ export function Pagination() {
   }
 
   return (
-    <div className="flex flex-row justify-center items-center gap-4 mt-4 max-md:mb-2">
+    <div className="flex flex-row justify-center items-center mt-4 max-lg:mb-2">
 
       {isPending && (
         <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50">
@@ -26,22 +26,37 @@ export function Pagination() {
           </div>
         </div>
       )}
+
+      <button
+        onClick={() => handlePageChange(currentPage - 5)}
+        disabled={currentPage <= 5}
+        className="bg-gray-300 mr-2 px-4 py-2 rounded cursor-pointer disabled:opacity-50"
+      >
+        <FaAnglesLeft />
+      </button>
       
       <button
         onClick={() => handlePageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        className="bg-gray-300 px-4 py-2 rounded cursor-pointer disabled:opacity-50"
+        className="bg-gray-300 mr-4 px-4 py-2 rounded cursor-pointer disabled:opacity-50"
       >
-        <FiArrowLeft />
+        <FaAngleLeft />
       </button>
 
       <span className="font-semibold">{currentPage}</span>
 
       <button
         onClick={() => handlePageChange(currentPage + 1)}
+        className="bg-gray-300 ml-4 mr-2 px-4 py-2 rounded cursor-pointer"
+      >
+        <FaAngleRight />
+      </button>
+
+      <button
+        onClick={() => handlePageChange(currentPage + 5)}
         className="bg-gray-300 px-4 py-2 rounded cursor-pointer"
       >
-        <FiArrowRight />
+        <FaAnglesRight />
       </button>
     </div>
   );

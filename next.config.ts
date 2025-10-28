@@ -9,6 +9,11 @@ const nextConfig: NextConfig = {
         hostname: "projectpokemon.org",
         pathname: "/images/**",
       },
+      {
+        protocol: "https",
+        hostname: "projectpokemon.org",
+        pathname: "/images/**",
+      }
      ] // ✅ permite imagens da PokéAPI
   },
 };

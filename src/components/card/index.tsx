@@ -14,7 +14,7 @@ export function Card({ name, url, id, types }: PokemonsProps) {
             </div>
             <div className="w-[90%] flex items-center justify-center h-[60%] mt-2">
                 <div className="w-full h-full relative">
-                    <Image alt="" className="transition-transform duration-500 ease-in-out hover:scale-110" fill priority quality={100} src={url as string} />
+                    <Image alt="" className="transition-transform duration-500 ease-in-out hover:scale-110" fill unoptimized priority src={url as string} />
                 </div>
             </div>
             <div className="h-[40%] mt-2 flex flex-row gap-2 justify-center items-center max-lg:flex-col">

@@ -2,49 +2,56 @@ import { Card } from "@/components/card/index";
 import { PokemonsProps } from "@/types/pokemons";
 import { Search } from "@/components/search";
 import { Pagination } from "@/components/pagination";
+import { cache } from "react";
+
+
+const getPokemonDetails = cache(async (id: string) => {
+  const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`, {
+    next: { revalidate: 86400 }, // 24h de cache
+  });
+  if (!res.ok) return null;
+  return res.json();
+});
 
 async function getPokemons(page = 1, query?: string) {
   const offset = (page - 1) * 10;
-  const res = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=10&offset=${offset}`);
+  const res = await fetch(
+    `https://pokeapi.co/api/v2/pokemon?limit=10&offset=${offset}`,
+    { next: { revalidate: 86400 } }
+  );
 
   if (!res.ok) throw new Error("Erro ao buscar pokémons");
 
   const data = await res.json();
 
-  // Para cada Pokémon, buscar os detalhes (incluindo tipos)
   const detailedPokemons = await Promise.all(
-    data.results.map(async (p: PokemonsProps) => {
-      const id = p.url!.split("/").filter(Boolean).pop();
-      const details = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
-      const pokemonData = await details.json();
-
-      const types = pokemonData.types.map((t: any) => t.type.name);
+    data.results.map(async (p: any) => {
+      const id = p.url.split("/").filter(Boolean).pop()!;
+      const details = await getPokemonDetails(id);
 
       return {
         id,
         name: p.name,
-        url: p.url,
-        image: pokemonData.sprites.front_default,
-        types,
+        image: `https://img.pokemondb.net/sprites/home/normal/${p.name}.png`,
+        types: details?.types.map((t: any) => t.type.name) ?? [],
       };
     })
   );
 
-  // Caso tenha uma query, filtra localmente
-  const filteredPokemons = query
-    ? detailedPokemons.filter((p) => p.name.toLowerCase().includes(query.toLowerCase()))
+  return query
+    ? detailedPokemons.filter((p) =>
+        p.name.toLowerCase().includes(query.toLowerCase())
+      )
     : detailedPokemons;
-
-  return filteredPokemons;
 }
 
 export default async function Home({
   searchParams,
 }: {
-  searchParams: { page?: string; query?: string };
+  searchParams: Promise<{ page?: string; query?: string }>;
 }) {
-  const currentPage = Number(searchParams.page) || 1;
-  const query = searchParams.query;
+  const currentPage = Number((await searchParams).page) || 1;
+  const query = (await searchParams).query || "";
   const pokemons = await getPokemons(currentPage, query);
 
   return (
