@@ -3,7 +3,7 @@ import { PokemonsProps } from "@/types/pokemons";
 import { Search } from "@/components/search";
 import { Pagination } from "@/components/pagination";
 import { cache } from "react";
-
+import Image from "next/image";
 
 const getPokemonDetails = cache(async (id: string) => {
   const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`, {
@@ -40,8 +40,8 @@ async function getPokemons(page = 1, query?: string) {
 
   return query
     ? detailedPokemons.filter((p) =>
-        p.name.toLowerCase().includes(query.toLowerCase())
-      )
+      p.name.toLowerCase().includes(query.toLowerCase())
+    )
     : detailedPokemons;
 }
 
@@ -55,13 +55,20 @@ export default async function Home({
   const pokemons = await getPokemons(currentPage, query);
 
   return (
-    <main className="flex flex-col items-center min-h-[100vh]">
-      <section className="mt-4 w-10/12 flex flex-row justify-between max-md:flex-col max-md:gap-2">
+    <main className="mb-1 flex flex-col items-center min-h-[100vh]">
+      <section className="mt-1 w-12/12 flex flex-row justify-between max-md:flex-col max-md:gap-2">
         <h1 className="text-black text-center text-4xl">Pokedex</h1>
+        <Image
+            src="/Poké_Ball_icon.svg.png"
+            alt="Pokedex Logo"
+            width={50}
+            height={50}
+            priority
+          />
         {/*<Search />*/}
       </section>
 
-      <section className="bg-gray-50 grid grid-cols-5 grid-rows-2 max-lg:grid-cols-4 border-gray-950 rounded mt-4 min-w-[95vw] min-h-[80vh] 
+      <section className="bg-gray-50 grid grid-cols-5 grid-rows-2 max-lg:grid-cols-4 border-gray-950 rounded mt-2 min-w-[85vw] min-h-[80vh] 
       max-md:grid-cols-4 max-sm:grid-cols-1 max-sm:place-items-center">
 
         {pokemons.map((p) => (

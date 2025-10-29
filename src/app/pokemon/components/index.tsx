@@ -20,10 +20,10 @@ export function StatBar({ label, value, max = 255 }: StatBarProps) {
             width: `${percent}%`,
             backgroundColor:
               value < 50
-                ? "#f87171" // vermelho (baixo)
+                ? "#f87171" 
                 : value < 100
-                ? "#facc15" // amarelo (médio)
-                : "#4ade80", // verde (alto)
+                ? "#facc15" 
+                : "#4ade80", 
           }}
         />
       </div>

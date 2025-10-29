@@ -23,7 +23,6 @@ export default function DetalhePokemon() {
                     throw new Error("Failed to fetch")
                 }
                 const data = await res.json()
-                console.log('data ', data.name)
                 setData(data)
             }
         } catch (error) {
@@ -45,7 +44,7 @@ export default function DetalhePokemon() {
             <div className="flex flex-col  items-center w-10/12 h-10/12 ">
                 <div className="flex mb-4 justify-around items-center flex-row w-full h-[30%] max-md:flex-col">
                     <div className="w-[20%] h-[70%] relative">
-                        <Image alt="" priority quality={100} fill src={data?.name ? `https://projectpokemon.org/images/normal-sprite/${data?.name}.gif` : "/Poké_Ball_icon.svg.png"} />
+                        <Image alt="Pokemon"  sizes="(max-width: 768px) 50vw, 10vw" priority fill src={data?.name ? `https://projectpokemon.org/images/normal-sprite/${data?.name}.gif` : "/Poké_Ball_icon.svg.png"} />
                     </div>
                     <div className="">
                         <h1 className="text-6xl max-md:text-3xl max-md:text-center">{data?.name}</h1>

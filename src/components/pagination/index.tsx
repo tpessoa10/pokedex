@@ -17,7 +17,7 @@ export function Pagination() {
   }
 
   return (
-    <div className="flex flex-row justify-center items-center mt-4 max-lg:mb-2">
+    <div className="flex flex-row justify-center items-center mt-4 max-xl:mb-2">
 
       {isPending && (
         <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50">
