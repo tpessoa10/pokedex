@@ -56,9 +56,10 @@ export default async function Home({
 
   return (
     <main className="mb-1 flex flex-col items-center min-h-[100vh]">
-      <section className="mt-1 w-12/12 flex flex-row justify-between max-md:flex-col max-md:gap-2">
-        <h1 className="text-black text-center text-4xl">Pokedex</h1>
+      <section className="mt-1 w-12/12 flex flex-row justify-between max-sm:flex-col max-sm:gap-2">
+        <h1 className="text-black text-center text-4xl max-sm:hidden">Pokedex</h1>
         <Image
+            className="max-sm:mx-auto"
             src="/Poké_Ball_icon.svg.png"
             alt="Pokedex Logo"
             width={50}

@@ -10,7 +10,7 @@ export function Card({ name, url, id, types }: PokemonsProps) {
     return (
         <Link className="bg-white rounded mx-2 my-2 h-[40vh] flex flex-col items-center w-[18vw] border-1 border-gray-300 max-sm:w-[80%]" href={`/pokemon/${id}`}>
             <div className="w-full text-xl">
-                <h2 className="font-medium mt-3 ml-3">{name}</h2>
+                <h2 className="font-medium mt-3 ml-3">{name.charAt(0).toUpperCase() + name.slice(1)}</h2>
             </div>
             <div className="w-[90%] flex items-center justify-center h-[60%] mt-2">
                 <div className="w-full h-full relative">

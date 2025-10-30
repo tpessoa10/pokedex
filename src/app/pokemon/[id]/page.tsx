@@ -47,7 +47,7 @@ export default function DetalhePokemon() {
                         <Image alt="Pokemon"  sizes="(max-width: 768px) 50vw, 10vw" priority fill src={data?.name ? `https://projectpokemon.org/images/normal-sprite/${data?.name}.gif` : "/Poké_Ball_icon.svg.png"} />
                     </div>
                     <div className="">
-                        <h1 className="text-6xl max-md:text-3xl max-md:text-center">{data?.name}</h1>
+                        <h1 className="text-6xl max-md:text-3xl max-md:text-center">{data?.name && data?.name.charAt(0).toUpperCase() + data?.name.slice(1)}</h1>
                         <div className="flex flex-row gap-2 mt-4">
                             {data && data!.types.map((t) => (
                                 <Chip key={t.slot} type={t.type.name} />
