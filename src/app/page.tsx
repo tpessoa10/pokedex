@@ -55,7 +55,7 @@ export default async function Home({
   const pokemons = await getPokemons(currentPage, query);
 
   return (
-    <main className="mb-1 flex flex-col items-center min-h-[100vh]">
+    <main className="flex flex-col items-center min-h-[100vh]">
       <section className="mt-1 w-12/12 flex flex-row justify-between max-sm:flex-col max-sm:gap-2">
         <h1 className="text-black text-center text-4xl max-sm:hidden">Pokedex</h1>
         <Image
